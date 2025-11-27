@@ -47,7 +47,7 @@ A complete redirect system replacing DooPlay’s `/links/` pages with a responsi
 
 ## Screenshots
 
-*(You can upload screenshots to an 'assets' folder in your repo and link them here)*
+![Plugin Screenshot](https://github.com/Xcoder143/dooplay-redirect-customizer---wpPlugin/raw/main/screenshot.png)
 
 ## Changelog
 
