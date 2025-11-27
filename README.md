@@ -3,7 +3,7 @@ Replace DooPlay link redirect page with a responsive redirect UI and admin setti
 
 # DooPlay Redirect Customizer
 
-**Contributors:** code-copilot  
+**Contributors:** Xcoder Bulit with ChatGPT + GEMINI AI's  
 **Tags:** dooplay, redirect, customizer, netflix-style, links  
 **Requires at least:** 5.0  
 **Tested up to:** 6.7  
