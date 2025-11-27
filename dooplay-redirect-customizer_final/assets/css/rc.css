@@ -1,0 +1,229 @@
+/**************************************************
+  RC.CSS – FINAL MERGED + FIXED VERSION (Option D)
+  Desktop = Linear progress + Full-width button (visible after timer)
+  Mobile  = Circular countdown + Button fades in after timer
+**************************************************/
+
+:root { --dprc-accent: #e50914; }
+
+/* ===== GLOBAL ===== */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Inter, system-ui, sans-serif;
+    background: #000;
+    color: var(--text, #fff);
+}
+
+.dprc-root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+/* BACKDROP */
+.dprc-backdrop {
+    position: fixed; inset: 0; background-size: cover; background-position: center;
+    filter: blur(18px) saturate(160%); transform: scale(1.08); opacity: 0.75;
+}
+.dprc-video-bg { position: fixed; inset: 0; width:100%; height:100%; object-fit:cover; filter: blur(14px) saturate(160%); opacity:0.78; }
+
+/* MAIN */
+.dprc-main { position: relative; z-index:3;  /*min-height:100vh;*/ display:flex; align-items:center; justify-content:center; /*padding:40px 20px;*/ flex-direction: column;flex-direction: column; }
+
+.dprc-card {
+    width:100%; max-width:985px; background: rgba(0,0,0,0.36); backdrop-filter: blur(16px) saturate(120%);
+    border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:22px; display:flex; gap:24px;
+    opacity:0; transform: translateY(12px); transition: opacity .45s ease, transform .45s ease;
+}
+.dprc-ready { opacity:1; transform:none; }
+
+.dprc-poster { width:230px; height:345px; background-size:cover; background-position:center; border-radius:14px; flex-shrink:0; }
+
+.dprc-meta { display:flex; flex-direction:column; justify-content:center; flex:1; }
+.dprc-title { font-size:28px; margin:0 0 6px 0; font-weight:700; color:#fff; }
+/*.dprc-sub { font-size:15px; display:flex; gap:8px; color:#ddd; margin-bottom:14px; align-items:center; }*/
+
+/* DESKTOP TIMER */
+.dprc-desktop-timer { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.dprc-timer-number { font-size:32px; font-weight:700; color: var(--dprc-accent); }
+.dprc-timer-label { font-size:14px; color:#ddd; }
+
+.dprc-progress { width:100%; height:11px; background: rgba(255,255,255,0.12); border-radius:8px; overflow:hidden; margin-bottom:16px; }
+.dprc-progress-bar { height:100%; width:0%; background:var(--dprc-accent); transition: width .1s linear; border-radius:8px; }
+
+/* BIG BUTTON (desktop full width) */
+.dprc-progress-btn {
+    display:none;
+    /*width:100%;*/
+    background:var(--dprc-accent);
+    color:#fff;
+    padding:14px 18px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: opacity .3s ease, transform .25s ease;
+    opacity:0;
+    transform: translateY(6px);
+}
+
+/* small default open btn hidden */
+.dprc-open-btn { display:none !important; }
+
+/* smooth hide utility */
+.dprc-hide { opacity:0 !important; visibility:hidden !important; pointer-events:none !important; transition: opacity .3s ease, visibility .3s ease; }
+.dprc-show { opacity:1 !important; visibility:visible !important; pointer-events:auto !important; transform: translateY(0) !important; }
+/* ... (other css rules) ... */
+
+
+/* MOBILE CIRCLE - This block is now FIRST */
+.dprc-circle-timer { display:none; position:relative; width:110px; height:110px; margin:12px auto 10px; }
+.dprc-circle { transform: rotate(-90deg); }
+.dprc-circle-bg { fill:none; stroke: rgba(255,255,255,0.18); stroke-width:8; }
+.dprc-circle-progress { fill:none; stroke: var(--dprc-accent); stroke-width:8; stroke-linecap:round; stroke-dasharray:314; stroke-dashoffset:314; transition: stroke-dashoffset .15s linear; }
+.dprc-circle-number { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:28px; font-weight:700; color:var(--dprc-accent); }
+
+
+/* MOBILE - This block is now SECOND */
+@media (max-width: 730px) {
+    .dprc-card { flex-direction:column; text-align:center; align-items:center; max-width:420px; padding:25px 20px; gap:16px; }
+    .dprc-poster { width:230px; height:345px; margin:0 auto; }
+    .dprc-title { font-size:22px; }
+    .dprc-sub { /*justify-content:center; flex-wrap:wrap;*/ }
+    .dprc-main {min-height: auto;}
+    .dprc-root { position: relative; width: 100%; height: 100%; overflow: scroll; }
+
+    /* hide desktop numbers/bar on mobile */
+    .dprc-desktop-timer, .dprc-progress { display:none !important; }
+
+    /* show mobile circle on mobile */
+    .dprc-circle-timer {
+        display: block;
+    }
+
+    /* big button behavior on mobile - initially hidden, fade in after timer */
+    .dprc-progress-btn { /*max-width:280px;*/ margin-top:12px; display:block; }
+}
+
+/* ... (rest of the css) ... */
+
+/* footer */
+.dprc-footer { text-align:center; margin-top:18px; color:#ddd; font-size:14px; }
+
+/* ----- New Info Box UI ----- */
+
+/* This is the container for the boxes */
+.dprc-sub {
+    display: flex;
+    gap: 12px; /* Space between boxes */
+    margin-bottom: 20px;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap; /* Lets boxes wrap on mobile */
+}
+
+/* This is each individual glass box */
+.dprc-infobox {
+    background: rgba(20, 20, 20, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+    border-radius: 16px;
+    padding: 12px 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    /*flex-basis: 120px; Each box will be at least 120px wide */
+}
+
+/* The "SIZE:", "QUALITY:" label */
+.dprc-info-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: #ddd;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* The "695.19 MB", "1080p" value */
+.dprc-info-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Hide the old dots */
+.dprc-sub .dprc-dot {
+    display: none;
+}
+
+/* new codes here */
+/* 1. Ambient Light for Poster */
+.dprc-poster {
+    /* This adds a soft white glow */
+    box-shadow: 0 5px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* 2. Ambient Light for Continue Button */
+.dprc-progress-btn.dprc-show {
+    /* This adds a new shadow layer.
+      We keep the original black shadow for depth.
+      We add a new, blurred shadow using the accent color.
+    */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25), 
+                0 0 25px var(--dprc-accent);
+}
+
+/* 3. Shine Effect for Info Boxes */
+
+/* First, define the animation that moves the shine */
+@keyframes dprc-shine {
+    0% { transform: translateX(-150%) skewX(-25deg); }
+    100% { transform: translateX(250%) skewX(-25deg); }
+}
+
+/* Next, update the info box. 
+  We need position:relative and overflow:hidden 
+  to contain the shine effect.
+*/
+.dprc-infobox {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Finally, create the shine element itself.
+  It's an angled gradient that animates across the box.
+*/
+.dprc-infobox::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    
+    /* The angled gradient for the shine */
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent
+    );
+    
+    /* Run the animation */
+    animation: dprc-shine 8s infinite;
+    
+    /* Set animation delay for each box */
+    animation-delay: 0s;
+}
+
+/* Add delays so the boxes don't all shine at once */
+.dprc-infobox:nth-child(2)::before {
+    animation-delay: 0.2s;
+}
+.dprc-infobox:nth-child(3)::before {
+    animation-delay: 0.4s;
+}
